@@ -1,0 +1,53 @@
+Student ID: 1234567
+   _______________________________
+ / \                              |
+ \__|                             |
+    |          * james *          |
+    |                             |
+    |                             |
+    |     FORCE -2 : (-2 + 0)     |
+    |    QUICKNESS 0 : (0 + 0)    |
+    |   RESILIENCE 0 : (-1 + 1)   |
+    |    ANALYTICAL 1 : (1 + 0)   |
+    |     EMPATHY 2 : (2 + 0)     |
+    |                             |
+    |  ___________________________|__
+    \_/_____________________________/
+HITPOINTS:4/7
+[ ][ ][ ][ ][ ][ ][ ]
+TEMP HP: 0
+XP:0/4
+[ ][ ][ ][ ]
+        |================================\
+[0]#####>--------  SPECIALTIES  ---------->
+        |================================/
+
+1. INNKEEPER
+You've spent much of your life as an innkeeper, acting as a community figurehead, and running an establishment
+
+        |================================\
+[0]#####>----------  FEATURES  ----------->
+        |================================/
+
+1. READ [*]
+"You have learned to read!, a valuable rare skill."
+
+2. SOCIALLY FLUENT []
+requires: empathy >= 0
+"You have developed a strong social fluency. +1 empathy."
+
+3. BASIC MATHEMATICS []
+requires: analytical >= 0
+"You have learned basic mathematics like arithmetic ! a valuable rare skill."
+
+4. EARLY RISER []
+requires: resilience >= 0
+"You've spent your life having to get up early, you are not afflicted by drowsy or similar effects in the morning."
+
+5. WRITE []
+"You have learned to write! a valuable rare skill."
+
+6. GRIT [**]
+"Through your life you've built up a good tolerance for long hours and hard work."
+
+
