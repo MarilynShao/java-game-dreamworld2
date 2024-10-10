@@ -23,12 +23,10 @@ public class StatsPanel extends JPanel implements ReliesOnCharacterData {
     public StatsPanel() {
         setLayout(new BorderLayout());
 
-        // Table columns: Name | Total | Base | Modifier
         String[] columnNames = {"Name", "Total", "Base", "Modifier"};
         tableModel = new DefaultTableModel(columnNames, 0);
         statsTable = new JTable(tableModel);
 
-        // Add the table to the panel
         add(new JScrollPane(statsTable), BorderLayout.CENTER);
     }
 
@@ -39,10 +37,8 @@ public class StatsPanel extends JPanel implements ReliesOnCharacterData {
      */
     @Override
     public void updateCharacter(Character character) {
-        // Clear existing rows in the table.
         tableModel.setRowCount(0);
 
-        // Populate the table with the character's primary stats.
         List<Stat> stats = character.getStat().all();
         for (Stat stat : stats) {
             Object[] rowData = {

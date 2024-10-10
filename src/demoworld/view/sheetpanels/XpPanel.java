@@ -17,25 +17,30 @@ public class XpPanel extends JPanel implements ReliesOnCharacterData {
     private JLabel xpLabel;
     private JButton gainXpButton;
     private JButton loseXpButton;
+    private JProgressBar xpProgressBar; // Progress bar for XP
 
     /**
      * Constructs the XpPanel.
      */
     public XpPanel() {
-        // Set the layout for the panel
-        setLayout(new GridLayout(1, 3));  // Layout to display buttons and label in one row
 
-        // Initialize label and buttons
+        setLayout(new GridLayout(2, 1));
+
         xpLabel = new JLabel();
+        xpProgressBar = new JProgressBar();
         gainXpButton = new JButton("+1 Xp");
         loseXpButton = new JButton("-1 Xp");
 
-        // Add buttons and label to the panel
-        add(loseXpButton);
-        add(gainXpButton);
-        add(xpLabel);
+        xpProgressBar.setStringPainted(true);
 
-        // Default label for XP (initial values)
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
+        buttonPanel.add(loseXpButton);
+        buttonPanel.add(gainXpButton);
+
+        add(xpLabel);
+        add(xpProgressBar);
+        add(buttonPanel);
+
         xpLabel.setText("XP: 0/0");
     }
 
@@ -44,13 +49,16 @@ public class XpPanel extends JPanel implements ReliesOnCharacterData {
      *
      * @param character the character to refer to when updating this class' internal state.
      */
+    @Override
     public void updateCharacter(Character character) {
-        // Update the XP label with the character's XP
+
         int currentXp = character.getExperience().current();
         int maxXp = character.getExperience().max();
 
-        // Set the XP label text
         xpLabel.setText("XP: " + currentXp + "/" + maxXp);
+
+        xpProgressBar.setMaximum(maxXp);
+        xpProgressBar.setValue(currentXp);
     }
 
     /**

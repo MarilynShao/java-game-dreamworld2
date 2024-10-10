@@ -2,6 +2,7 @@ package demoworld.view.sheetpanels;
 
 import demoworld.ReliesOnCharacterData;
 import demoworld.model.Character;
+import demoworld.model.Specialty;
 
 /**
  * SpecialtyList extends EntryList and implements ReliesOnCharacterData.
@@ -22,11 +23,11 @@ public class SpecialtyList extends EntryList implements ReliesOnCharacterData {
      * @param character The character to refer to when updating this class' internal state.
      */
     public void updateCharacter(Character character) {
-        // Clear the current model
         getListModel().clear();
 
-        // Add all specialties from the character to the list model
-        character.getSpecialty().all().forEach(specialty -> getListModel().addElement(specialty.getName()));
+        for (Specialty specialty : character.getSpecialty().all()) {
+            getListModel().addElement(specialty.getName());
+        }
     }
 }
 

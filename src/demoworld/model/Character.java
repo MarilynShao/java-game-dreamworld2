@@ -192,7 +192,7 @@ public class Character {
         this.experience.addToCurrent(value);
         if (this.experience.canLevelUp()) {
             this.experience.resetToMin();
-            this.hitpoints.addToMaxBase(1);  // Level up increases max HP.
+            this.hitpoints.addToMaxBase(1);
         }
     }
 

@@ -24,10 +24,8 @@ public class FeatureList extends EntryList implements ReliesOnCharacterData {
      */
     @Override
     public void updateCharacter(Character character) {
-        // Clear the existing list
         getListModel().clear();
 
-        // Add all features of the character to the list
         for (Feature feature : character.getFeature().all()) {
             getListModel().addElement(feature.getName());
         }

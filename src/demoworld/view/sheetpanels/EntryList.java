@@ -19,16 +19,27 @@ public class EntryList extends JPanel {
      * @param label the label for this entry list
      */
     public EntryList(String label) {
-        // Initialize list model and entry list components
         listModel = new DefaultListModel<>();
         entryList = new JList<>(listModel);
         removeButton = new JButton("Remove");
 
-        // Create layout and add components (e.g., label, list, and remove button)
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(new JLabel(label));
         add(new JScrollPane(entryList));
         add(removeButton);
+    }
+
+    /**
+     * Adds an ActionListener for when a selection in JList is clicked on.
+     *
+     * @param listener the ActionListener you want to fire when a selection is clicked on
+     */
+    public void addSelectionListener(ActionListener listener) {
+        entryList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                listener.actionPerformed(null);
+            }
+        });
     }
 
     /**
@@ -41,16 +52,12 @@ public class EntryList extends JPanel {
     }
 
     /**
-     * Adds an ActionListener for when a selection in JList is clicked on.
+     * Returns the DefaultListModel used for the JList.
      *
-     * @param listener the ActionListener you want to fire when a selection is clicked on
+     * @return the given DefaultListModel
      */
-    public void addSelectionListener(ActionListener listener) {
-        entryList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                listener.actionPerformed(null); // Trigger listener when selection changes
-            }
-        });
+    public DefaultListModel<String> getListModel() {
+        return listModel;
     }
 
     /**
@@ -60,15 +67,6 @@ public class EntryList extends JPanel {
      */
     public JList<String> getList() {
         return entryList;
-    }
-
-    /**
-     * Returns the DefaultListModel used for the JList.
-     *
-     * @return the given DefaultListModel
-     */
-    public DefaultListModel<String> getListModel() {
-        return listModel;
     }
 
     /**

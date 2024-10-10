@@ -59,7 +59,7 @@ public class EntryManager<T extends Named> {
      * @return a newly instantiated ArrayList holding all the entries from this manager.
      */
     public List<T> all() {
-        return new ArrayList<>(entries); // Return a copy of the list to prevent modification.
+        return new ArrayList<>(entries);
     }
 
     /**

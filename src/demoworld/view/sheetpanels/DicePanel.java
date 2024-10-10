@@ -22,17 +22,15 @@ public class DicePanel extends JPanel {
     public DicePanel() {
         this.setLayout(new GridLayout(3, 2));
 
-        // Create UI components
         rollButton = new JButton("Roll");
         advantageCheckBox = new JCheckBox("Advantage?");
         rerollOnesCheckBox = new JCheckBox("Reroll ones?");
-        resultLabel = new JLabel("Result: ");
+        resultLabel = new JLabel("Dice Panel");
 
-        // Add components to panel
-        this.add(advantageCheckBox);
-        this.add(rerollOnesCheckBox);
         this.add(resultLabel);
         this.add(rollButton);
+        this.add(advantageCheckBox);
+        this.add(rerollOnesCheckBox);
     }
 
     /**
