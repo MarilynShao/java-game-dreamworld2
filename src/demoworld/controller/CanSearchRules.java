@@ -6,7 +6,8 @@ package demoworld.controller;
  */
 public interface CanSearchRules {
      /**
-      * Can open the search panel and give it values from the {@link demoworld.model.RuleBook} to represent.
+      * Can open the search panel and give it values from the
+      * {@link demoworld.model.RuleBook} to represent.
       */
      void openRulesSearch();
 }

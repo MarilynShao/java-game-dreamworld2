@@ -18,7 +18,8 @@ public class SpecialtyList extends EntryList implements ReliesOnCharacterData {
     }
 
     /**
-     * Updates itself based on the new character data and then passes it on to its relevant children.
+     * Updates itself based on the new character data and
+     * then passes it on to its relevant children.
      *
      * @param character The character to refer to when updating this class' internal state.
      */

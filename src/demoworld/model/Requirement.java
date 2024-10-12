@@ -53,6 +53,11 @@ public class Requirement implements Named {
         return character.getStatByName(this.statKey).getTotal() >= this.threshold;
     }
 
+    /**
+     * Returns a string representation of the requirement, showing the stat key and threshold.
+     *
+     * @return a string representation of the requirement
+     */
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

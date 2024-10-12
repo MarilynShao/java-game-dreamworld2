@@ -1,4 +1,5 @@
 package demoworld;
+
 import demoworld.model.Character;
 
 /**

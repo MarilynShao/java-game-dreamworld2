@@ -14,34 +14,50 @@ import java.awt.event.ActionListener;
  */
 public class XpPanel extends JPanel implements ReliesOnCharacterData {
 
-    private JLabel xpLabel;
+    /**
+     * The button for gaining experience points.
+     * A {@code JButton} that triggers an action to increase the character's XP.
+     */
     private JButton gainXpButton;
+
+    /**
+     * The button for losing experience points.
+     * A {@code JButton} that triggers an action to decrease the character's XP.
+     */
     private JButton loseXpButton;
-    private JProgressBar xpProgressBar; // Progress bar for XP
+
+    /**
+     * A progress bar visually displaying the character's experience points.
+     * A {@code JProgressBar} used to represent the XP progress in a graphical form.
+     */
+    private JProgressBar xpProgressBar;
+
+    /**
+     * A reference to the character whose experience is displayed and updated.
+     */
+    private Character character;
+
 
     /**
      * Constructs the XpPanel.
      */
     public XpPanel() {
 
-        setLayout(new GridLayout(2, 1));
+        setLayout(new BorderLayout());
 
-        xpLabel = new JLabel();
-        xpProgressBar = new JProgressBar();
+        xpProgressBar = new JProgressBar(0, 100);
         gainXpButton = new JButton("+1 Xp");
         loseXpButton = new JButton("-1 Xp");
 
+        xpProgressBar.setString("XP: 0/0");
         xpProgressBar.setStringPainted(true);
 
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
         buttonPanel.add(loseXpButton);
         buttonPanel.add(gainXpButton);
 
-        add(xpLabel);
-        add(xpProgressBar);
-        add(buttonPanel);
-
-        xpLabel.setText("XP: 0/0");
+        add(xpProgressBar, BorderLayout.NORTH);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     /**
@@ -55,10 +71,10 @@ public class XpPanel extends JPanel implements ReliesOnCharacterData {
         int currentXp = character.getExperience().current();
         int maxXp = character.getExperience().max();
 
-        xpLabel.setText("XP: " + currentXp + "/" + maxXp);
-
         xpProgressBar.setMaximum(maxXp);
         xpProgressBar.setValue(currentXp);
+        xpProgressBar.setString("XP: " + currentXp + "/" + maxXp);
+
     }
 
     /**

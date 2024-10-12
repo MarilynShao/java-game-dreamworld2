@@ -9,10 +9,14 @@ import java.util.Random;
  */
 public class Dice {
 
-    // Number of sides on the dice
+    /**
+     * The number of sides on the dice.
+     */
     private int sides;
 
-    // Random generator for rolling the dice
+    /**
+     * The random number generator used for dice rolls.
+     */
     private Random random;
 
     /**
@@ -60,7 +64,6 @@ public class Dice {
      * @return a random number between 1 and the number of sides on the Dice
      */
     public int roll() {
-        // Generates a random number between 1 and sides
         return random.nextInt(this.sides) + 1;
     }
 }

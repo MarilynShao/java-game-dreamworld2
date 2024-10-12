@@ -138,7 +138,7 @@ public class Specialty implements Adjuster, Named, HasRequirements  {
     @Override
     public Character unadjust(Character character) {
         for (Feature feature : features.all()) {
-            if(character.getFeature().all().contains(feature)) {
+            if (character.getFeature().all().contains(feature)) {
                 character.removeFeature(feature);
             }
         }

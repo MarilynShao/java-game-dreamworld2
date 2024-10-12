@@ -1,6 +1,7 @@
 package demoworld.view.sheetpanels;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -9,9 +10,25 @@ import java.awt.event.ActionListener;
  */
 public class EntryList extends JPanel {
 
+    /**
+     * The list that displays the entries.
+     * A {@code JList} of type {@code String} used to show the selectable entries.
+     */
     private final JList<String> entryList;
+
+    /**
+     * The model that holds the data for the entry list.
+     * A {@code DefaultListModel} of type {@code String} that represents
+     * the underlying data for the {@code entryList}.
+     */
     private final DefaultListModel<String> listModel;
+
+    /**
+     * The button used to remove an entry from the list.
+     * A {@code JButton} that triggers the removal of a selected entry.
+     */
     private final JButton removeButton;
+
 
     /**
      * Instantiates EntryList with the given label.
@@ -19,14 +36,19 @@ public class EntryList extends JPanel {
      * @param label the label for this entry list
      */
     public EntryList(String label) {
+        setLayout(new BorderLayout());
+
         listModel = new DefaultListModel<>();
         entryList = new JList<>(listModel);
         removeButton = new JButton("Remove");
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(new JLabel(label));
-        add(new JScrollPane(entryList));
-        add(removeButton);
+        JLabel titleLabel = new JLabel(label, SwingConstants.CENTER);
+
+        add(titleLabel, BorderLayout.NORTH);
+
+        add(entryList, BorderLayout.CENTER);
+
+        add(removeButton, BorderLayout.SOUTH);
     }
 
     /**

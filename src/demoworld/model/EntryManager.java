@@ -10,6 +10,11 @@ import java.util.List;
  */
 public class EntryManager<T extends Named> {
 
+    /**
+     * A list that holds the entries managed by this EntryManager.
+     * Each entry is of type {@code T}, where {@code T} represents
+     * a specific type of entry (e.g., Stat, Feature, etc.).
+     */
     private List<T> entries;
 
     /**
@@ -41,7 +46,9 @@ public class EntryManager<T extends Named> {
         return entries.stream()
                 .filter(entry -> entry.getName().equalsIgnoreCase(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Entry with name " + name + " does not exist!"));
+                .orElseThrow(()
+                        -> new IllegalStateException("Entry with name "
+                        + name + " does not exist!"));
     }
 
     /**

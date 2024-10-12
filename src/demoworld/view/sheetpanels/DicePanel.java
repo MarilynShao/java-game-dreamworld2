@@ -11,10 +11,30 @@ import java.awt.event.ActionListener;
  */
 public class DicePanel extends JPanel {
 
+    /**
+     * Button to trigger rolling the dice.
+     * The {@code JButton} that initiates the dice roll when clicked.
+     */
     private final JButton rollButton;
+
+    /**
+     * Checkbox to indicate if the roll should have advantage.
+     * When selected, the roll will follow the game's advantage rules.
+     */
     private final JCheckBox advantageCheckBox;
+
+    /**
+     * Checkbox to indicate if the player wants to reroll ones.
+     * When selected, dice rolls that result in a one will be rerolled.
+     */
     private final JCheckBox rerollOnesCheckBox;
+
+    /**
+     * Label to display the result of the dice roll.
+     * The {@code JLabel} that shows the outcome of the dice roll.
+     */
     private final JLabel resultLabel;
+
 
     /**
      * Instantiates a new DicePanel.
@@ -25,7 +45,9 @@ public class DicePanel extends JPanel {
         rollButton = new JButton("Roll");
         advantageCheckBox = new JCheckBox("Advantage?");
         rerollOnesCheckBox = new JCheckBox("Reroll ones?");
-        resultLabel = new JLabel("Dice Panel");
+        resultLabel = new JLabel("Dice Panel", SwingConstants.CENTER);
+
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
 
         this.add(resultLabel);
         this.add(rollButton);

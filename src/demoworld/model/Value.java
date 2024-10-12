@@ -1,9 +1,12 @@
 package demoworld.model;
 
 /**
- * Represents a game {@code Value} that has a mininum amount, a maximum amount, and a current amount.
- * If the current amount would ever go past the maximum, it should be set back to the maximum value.
- * If the current amount would ever go below the mininum, it should be set back to the mininum value.
+ * Represents a game {@code Value} that has a mininum amount,
+ * a maximum amount, and a current amount.
+ * If the current amount would ever go past the maximum,
+ * it should be set back to the maximum value.
+ * If the current amount would ever go below the mininum,
+ * it should be set back to the mininum value.
  */
 public class Value {
     /**

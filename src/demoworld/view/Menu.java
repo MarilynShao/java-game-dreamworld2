@@ -14,10 +14,11 @@ public class Menu extends JPanel {
      * Initializes a basic layout with buttons for options.
      */
     public Menu() {
-        setLayout(new GridLayout(2, 1));
+        setLayout(new GridLayout(1, 2));
 
-        addOption("Start", e -> System.out.println("Start clicked"));
-        addOption("Exit", e -> System.exit(0));
+        addOption("Start", e -> startGame());
+
+        addOption("Exit", e -> exitGame());
     }
 
     /**
@@ -31,5 +32,26 @@ public class Menu extends JPanel {
         button.addActionListener(listener);
         add(button);
     }
+
+    /**
+     * Logic for starting the game. This will switch the view to the game screen.
+     */
+    private void startGame() {
+
+        View view = (View) SwingUtilities.getWindowAncestor(this);
+        if (view != null) {
+            view.openSheet();
+        }
+    }
+
+    /**
+     * Logic for exiting the game/application.
+     */
+    private void exitGame() {
+        System.exit(0);
+    }
 }
+
+
+
 

@@ -4,13 +4,41 @@ package demoworld.model;
  * A representation of a characters state in a rpg game
  */
 public class Character {
+    /**
+     * The name of the character.
+     */
     private String name;
+
+    /**
+     * A reference to the rulebook that defines the rules.
+     */
     private final RuleBook rulebook;
+
+    /**
+     * An entry manager that holds all the stats related to the character.
+     */
     private final EntryManager<Stat> stats;
+
+    /**
+     * An entry manager that holds all the features that have been added to the character.
+     */
     private final EntryManager<Feature> features;
+
+    /**
+     * An entry manager that holds all the specialties for the character.
+     */
     private final EntryManager<Specialty> specialties;
+
+    /**
+     * Represents the hitpoints (HP) of the character.
+     */
     private final Hitpoints hitpoints;
+
+    /**
+     * Represents the experience points (XP) of the character.
+     */
     private final Experience experience;
+
 
     /**
      * Constructs a new Character with the given name and rulebook.
@@ -21,7 +49,6 @@ public class Character {
     public Character(String name, RuleBook rulebook) {
         this.name = name;
         this.rulebook = rulebook;
-        // Initialize stats, features, specialties, hitpoints, and experience from the rulebook
         this.stats = rulebook.getStat();
         this.features = new EntryManager<>();
         this.specialties = new EntryManager<>();
@@ -185,7 +212,7 @@ public class Character {
 
     /**
      * adjusts the characters Experience then check if the character
-     * should level up and reset the xp back to the mininum
+     * should level up and reset the xp back to the minimum
      * @param value the value to add to the Character's current experience.
      */
     public void adjustXp(int value) {
@@ -205,28 +232,26 @@ public class Character {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        // Character Name Block
         sb.append("   _______________________________").append("\n")
                 .append(" / \\                              |").append("\n")
                 .append(" \\__|                             |").append("\n")
                 .append("    |          * ").append(this.name).append(" *          |").append("\n")
                 .append("    |                             |").append("\n");
 
-        // Stats block using Stat's toString
+        int maxStatLength = getMaxStatLength();
+
         for (Stat stat : this.stats.all()) {
-            sb.append("    |     ").append(stat.toString()).append("     |\n");
+            String statString = stat.toString();
+            sb.append("    |  ").append(padRight(statString, maxStatLength)).append("     |\n");
         }
 
-        // End of name and stats block
         sb.append("    |                             |\n")
                 .append("    |  ___________________________|__\n")
                 .append("    \\_/_____________________________/\n");
 
-        // Hitpoints and XP using their respective toString methods
         sb.append(this.hitpoints.toString()).append("\n");
         sb.append(this.experience.toString()).append("\n");
 
-        // Specialties section
         sb.append("        |================================\\\n")
                 .append("[0]#####>--------  SPECIALTIES  ---------->\n")
                 .append("        |================================/\n\n");
@@ -237,7 +262,6 @@ public class Character {
             specialtyIndex++;
         }
 
-        // Features section using Feature's toString
         sb.append("        |================================\\\n")
                 .append("[0]#####>----------  FEATURES  ----------->\n")
                 .append("        |================================/\n\n");
@@ -250,5 +274,30 @@ public class Character {
 
         return sb.toString();
     }
+
+    /**
+     * Calculates the maximum length of the stat string for proper alignment.
+     *
+     * @return the maximum length of any stat's string representation
+     */
+    private int getMaxStatLength() {
+        int maxLength = 0;
+        for (Stat stat : this.stats.all()) {
+            maxLength = Math.max(maxLength, stat.toString().length());
+        }
+        return maxLength;
+    }
+
+    /**
+     * Pads a string with spaces to ensure consistent width for alignment.
+     *
+     * @param str    the string to pad
+     * @param length the length to pad the string to
+     * @return the padded string
+     */
+    private String padRight(String str, int length) {
+        return String.format("%-" + length + "s", str);
+    }
+
 
 }

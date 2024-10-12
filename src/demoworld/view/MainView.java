@@ -2,35 +2,71 @@ package demoworld.view;
 
 import demoworld.model.Character;
 import demoworld.view.sheetpanels.DicePanel;
-import demoworld.view.Sheet;
 import javax.swing.*;
 
+/**
+ * Interface representing the main view of the application.
+ * Provides methods for updating and accessing different panels in the view.
+ */
 public interface MainView {
 
+    /**
+     * Updates the view based on the provided character data.
+     *
+     * @param character The character whose data will be used to update the view.
+     */
     void updateCharacter(Character character);
 
-    // Method to get the DicePanel
+    /**
+     * Retrieves the dice panel for the view.
+     *
+     * @return The {@code DicePanel} used for dice rolling operations.
+     */
     DicePanel getDicePanel();
 
-    // Method to get the Menu panel
+    /**
+     * Retrieves the menu panel for the view.
+     *
+     * @return The {@code Menu} panel for the application.
+     */
     Menu getMenu();
 
-    // Method to get the Search panel
+    /**
+     * Retrieves the search panel for the view.
+     *
+     * @return The {@code Search} panel for searching within the application.
+     */
     Search getSearch();
 
-    // Method to return the current selected search pick
+    /**
+     * Retrieves the currently selected search entry.
+     *
+     * @return A {@code String} representing the selected search pick.
+     */
     String getSearchPick();
 
-    // Method to return the sheet panel
+    /**
+     * Retrieves the sheet panel for the view.
+     *
+     * @return The {@code Sheet} panel representing the character sheet.
+     */
     Sheet getSheet();
 
-    // Method to return the top menu bar
+    /**
+     * Retrieves the top menu bar for the view.
+     *
+     * @return The {@code JMenuBar} used as the top menu bar in the view.
+     */
     JMenuBar getTopMenuBar();
 
-    // Method to set the search panel as visible
+    /**
+     * Makes the search panel visible.
+     */
     void openSearch();
 
-    // Method to set the sheet panel as visible
+    /**
+     * Makes the sheet panel visible.
+     */
     void openSheet();
 }
 

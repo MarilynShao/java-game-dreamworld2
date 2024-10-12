@@ -11,10 +11,25 @@ import java.util.List;
  */
 public class Search extends JPanel {
 
+    /**
+     * The text field where the user can input their search query.
+     */
     private final JTextField searchField;
+    /**
+     * The list that displays the searchable entries.
+     */
     private final JList<String> entryList;
+    /**
+     * The model that holds the data for the entry list.
+     */
     private final DefaultListModel<String> listModel;
+    /**
+     * The button used to confirm the selection of an entry.
+     */
     private final JButton pickButton;
+    /**
+     * A list holding the current entries available in the search panel.
+     */
     private List<String> entries;
 
     /**
@@ -93,11 +108,28 @@ public class Search extends JPanel {
         }
     }
 
-    // Custom document listener for search field updates
+    /**
+     * Abstract class that listens for changes in the text field's
+     * document and triggers the {@code onUpdate} method.
+     * This class is used for handling updates to the search field.
+     */
     private abstract static class DocumentAdapter implements javax.swing.event.DocumentListener {
-        public void insertUpdate(javax.swing.event.DocumentEvent e) { onUpdate(); }
-        public void removeUpdate(javax.swing.event.DocumentEvent e) { onUpdate(); }
-        public void changedUpdate(javax.swing.event.DocumentEvent e) { onUpdate(); }
+        public void insertUpdate(javax.swing.event.DocumentEvent e) {
+            onUpdate();
+        }
+
+        public void removeUpdate(javax.swing.event.DocumentEvent e) {
+            onUpdate();
+        }
+
+        public void changedUpdate(javax.swing.event.DocumentEvent e) {
+            onUpdate();
+        }
+
+        /**
+         * Method to be implemented by the subclass to define what
+         * happens when the document is updated.
+         */
         public abstract void onUpdate();
     }
 }

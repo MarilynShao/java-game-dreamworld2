@@ -15,11 +15,35 @@ import java.awt.event.ActionListener;
  */
 public class HpPanel extends JPanel implements ReliesOnCharacterData {
 
+    /**
+     * The progress bar that visually represents the character's hitpoints (HP).
+     * A {@code JProgressBar} used to display the current HP relative to the maximum HP.
+     */
     private JProgressBar hpBar;
-    private JLabel hpLabel;
+
+    /**
+     * The button used to apply damage to the character.
+     * A {@code JButton} that triggers the reduction of HP when pressed.
+     */
     private JButton damageButton;
+
+    /**
+     * The button used to heal the character.
+     * A {@code JButton} that triggers an increase in HP when pressed.
+     */
     private JButton healButton;
+
+    /**
+     * The button used to add temporary hitpoints to the character.
+     * A {@code JButton} that triggers the addition of temporary HP when pressed.
+     */
     private JButton tempHpButton;
+
+    /**
+     * Character
+     */
+    private Character character;
+
 
     /**
      * Constructor for HpPanel.
@@ -29,9 +53,8 @@ public class HpPanel extends JPanel implements ReliesOnCharacterData {
         setLayout(new BorderLayout());
 
         hpBar = new JProgressBar(0, 100);
+        hpBar.setString("HITPOINTS (0) 0/0");
         hpBar.setStringPainted(true);
-
-        hpLabel = new JLabel("HITPOINTS (0) 0/0", SwingConstants.CENTER);
 
         JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
 
@@ -43,9 +66,12 @@ public class HpPanel extends JPanel implements ReliesOnCharacterData {
         buttonPanel.add(healButton);
         buttonPanel.add(tempHpButton);
 
+        JPanel emptyPanel = new JPanel();
+        emptyPanel.setPreferredSize(new Dimension(0, 20));
+
         add(hpBar, BorderLayout.NORTH);
-        add(hpLabel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.CENTER);
+        add(emptyPanel, BorderLayout.SOUTH);
     }
 
     /**
@@ -53,18 +79,23 @@ public class HpPanel extends JPanel implements ReliesOnCharacterData {
      * hitpoints and change the background color based on health percentage.
      *
      * @param character the character whose hitpoints are displayed in the panel.
-     *                  This method pulls data from the character's hitpoints and updates the panel's label.
+     *                  This method pulls data from the character's hitpoints
+     *                  and updates the panel's label.
      */
     public void updateCharacter(Character character) {
+
+        this.character = character;
 
         int currentHp = character.getHitpoints().getBase().current();
         int maxHp = character.getHitpoints().getBase().max();
         int tempHp = character.getHitpoints().getTempHp();
 
-        int percentage = (int) (((double) currentHp / maxHp) * 100);
-        hpBar.setValue(percentage);
+        hpBar.setMaximum(maxHp);
+        hpBar.setValue(currentHp);
 
-        hpLabel.setText("HITPOINTS (" + tempHp + ") " + currentHp + "/" + maxHp);
+        hpBar.setString("HITPOINTS (" + tempHp + ") " + currentHp + "/" + maxHp);
+
+        int percentage = (int) (((double) currentHp / maxHp) * 100);
 
         if (percentage <= 50) {
             hpBar.setForeground(new Color(148, 24, 37));
@@ -75,6 +106,7 @@ public class HpPanel extends JPanel implements ReliesOnCharacterData {
         } else {
             hpBar.setForeground(new Color(40, 100, 23));
         }
+        hpBar.repaint();
     }
 
     /**

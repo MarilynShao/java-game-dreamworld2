@@ -4,11 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Notification class that extends JFrame.
- * Displays a small notification at the bottom right of the screen and can be manually closed.
+ * Notification class that extends {@link JFrame}.
+ * This class displays a small notification window at the center of the screen.
+ * Each notification can be manually closed by the user.
  */
 public class Notification extends JFrame {
 
+    /** Tracks the number of active notifications currently displayed on the screen. */
     private static int notificationCount = 0;
 
     /**
@@ -18,21 +20,22 @@ public class Notification extends JFrame {
      * @param message The text content that will be displayed on the notification.
      */
     public Notification(String title, String message) {
-        // Set up the frame
         setTitle(title);
         setUndecorated(true);
         setAlwaysOnTop(true);
-        setSize(200, 100);
+        setSize(300, 200);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         panel.setBackground(Color.LIGHT_GRAY);
 
-        JLabel titleLabel = new JLabel(title);
+        JLabel titleLabel = new JLabel(title, JLabel.LEFT);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        JLabel messageLabel = new JLabel(message);
+        panel.add(titleLabel, BorderLayout.NORTH);
+
+        JLabel messageLabel = new JLabel(message, JLabel.CENTER);
         messageLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        panel.add(messageLabel, BorderLayout.CENTER);
 
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(e -> {
@@ -40,19 +43,15 @@ public class Notification extends JFrame {
             dispose();
             notificationCount--;
         });
-
-        panel.add(titleLabel);
-        panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        panel.add(messageLabel);
-        panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        panel.add(closeButton);
+        panel.add(closeButton, BorderLayout.SOUTH);
 
         add(panel);
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
-        int x = screenSize.width - getWidth() - 10;
-        int y = screenSize.height - getHeight() - 40 - (notificationCount * getHeight());
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+
         setLocation(x, y);
 
         setVisible(true);

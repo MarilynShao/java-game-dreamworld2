@@ -8,7 +8,9 @@ public class Hitpoints extends Stat {
     /**
      * Constructs a new Hitpoints instance
      *
-     * @param max     initial maximum amount for both the base Value and the modifier Value in hitpoints (the initial minimums are always zero for hitpoints)
+     * @param max     initial maximum amount for both the
+     *                base Value and the modifier Value in hitpoints
+     *                (the initial minimums are always zero for hitpoints)
      * @param current initial current amount for the base Value in hitpoints
      */
     public Hitpoints(int max, int current) {

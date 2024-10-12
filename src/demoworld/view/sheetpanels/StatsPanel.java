@@ -14,8 +14,20 @@ import java.util.List;
  */
 public class StatsPanel extends JPanel implements ReliesOnCharacterData {
 
+    /**
+     * The table that displays the character's stats.
+     * A {@code JTable} used to visually represent the character's stats,
+     * such as total, base, and modifier values.
+     */
     private JTable statsTable;
+
+    /**
+     * The model that holds the data for the stats table.
+     * A {@code DefaultTableModel} that manages the data shown in the {@code statsTable},
+     * including columns for name, total, base, and modifier values.
+     */
     private DefaultTableModel tableModel;
+
 
     /**
      * Instantiates a StatsPanel.
@@ -27,7 +39,10 @@ public class StatsPanel extends JPanel implements ReliesOnCharacterData {
         tableModel = new DefaultTableModel(columnNames, 0);
         statsTable = new JTable(tableModel);
 
-        add(new JScrollPane(statsTable), BorderLayout.CENTER);
+        statsTable.setFillsViewportHeight(true);
+
+        add(statsTable.getTableHeader(), BorderLayout.NORTH);
+        add(statsTable, BorderLayout.CENTER);
     }
 
     /**

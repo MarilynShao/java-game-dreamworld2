@@ -36,15 +36,62 @@ public class Scholar {
         FEATURES;
     }
 
+    /**
+     * The rulebook that the character refers to for game rules and data.
+     * This is a reference to the game’s {@code RuleBook} object.
+     */
     private final RuleBook rulebook;
+
+    /**
+     * The current mode of the game or application.
+     * {@code Mode} indicates the current operational mode the character or game is in.
+     */
     private Mode currentMode;
+
+    /**
+     * The name of the character.
+     * This is a {@code String} that stores the name of the character in the game.
+     */
     private String characterName;
+
+    /**
+     * The current hitpoints of the character.
+     * This integer represents the base health of the character.
+     */
     private int hitpoints;
+
+    /**
+     * The temporary hitpoints of the character.
+     * {@code tempHp} represents the extra or temporary health
+     * points that can be lost before affecting base health.
+     */
     private int tempHp;
+
+    /**
+     * The current experience points of the character.
+     * {@code experience} represents the progress towards leveling up.
+     */
     private int experience;
+
+    /**
+     * A list of specialties the character has.
+     * Each {@code String} represents a specialty by its name.
+     */
     private final List<String> specialties;
+
+    /**
+     * A list of features the character has.
+     * Each {@code String} represents a feature by its name.
+     */
     private final List<String> features;
+
+    /**
+     * A reference to the {@code Character} object.
+     * This represents the character being manipulated or
+     * referenced within the current context.
+     */
     private Character character;
+
 
     /**
      * Instantiates an instance of Scholar using the given Rulebook.
@@ -65,8 +112,12 @@ public class Scholar {
      * @return a reference to the Scholar instance, allowing method chaining
      */
     public Scholar build(String filePath) {
+        System.out.println("Starting to build character from file: " + filePath);
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+
+            character = new Character("Unnamed Character", rulebook);  // Default name
+
             while ((line = reader.readLine()) != null) {
                 processLine(line);
             }
@@ -75,6 +126,7 @@ public class Scholar {
         }
         return this;
     }
+
 
     /**
      * Returns the current Scholar.Mode scholar is configured to.
@@ -86,46 +138,75 @@ public class Scholar {
     }
 
     /**
-     * Processes a given line of text determining if there is any information
-     * within that should be tracked for future use if/when getCharacter is called.
+     * Processes a given line of text, determining if there is any information
+     * within that should be tracked for future use when getCharacter is called.
      *
      * @param line The line that will be processed.
      */
     public void processLine(String line) {
-        // Check for mode change
-        if (line.contains("SPECIALTIES")) {
-            currentMode = Mode.SPECIALTIES;
-        } else if (line.contains("FEATURES")) {
-            currentMode = Mode.FEATURES;
-        } else if (currentMode == Mode.SPECIALTIES) {
-            specialties.add(extractNamedEntry(line));
-        } else if (currentMode == Mode.FEATURES) {
-            features.add(extractNamedEntry(line));
-        } else {
-            // If no mode is active, check for other information
-            if (line.startsWith("HITPOINTS")) {
-                hitpoints = extractCurrentHp(line);
-            } else if (line.startsWith("TEMP HP")) {
-                tempHp = extractTempHp(line);
-            } else if (line.startsWith("XP")) {
-                experience = extractCurrentXp(line);
-            } else if (line.contains("FORCE") || line.contains("QUICKNESS") ||
-                    line.contains("RESILIENCE") || line.contains("ANALYTICAL") || line.contains("EMPATHY")) {
-                // Extract stat values based on the line content
+        line = line.trim();
+
+        if (line.matches("^[|=\\[\\]#>/-]+$")) {
+            return;
+        }
+        System.out.println("Processing line: " + line);
+
+        if (line.contains("*") && line.contains("|")) {
+            System.out.println("Line with * detected: " + line);
+            characterName = extractName(line);
+            if (characterName != null && !characterName.isEmpty()) {
+                System.out.println("Extracted Character Name: " + characterName);
+            } else {
+                System.err.println("Failed to extract name from line: " + line);
+            }
+        } else if (line.contains("FORCE") || line.contains("QUICKNESS")
+                || line.contains("RESILIENCE")
+                || line.contains("ANALYTICAL") || line.contains("EMPATHY")) {
+
+            String[] parts = line.split("\\s+");
+
+            if (parts.length >= 2) {
+                String statName = parts[1].toLowerCase();
                 int statValue = extractStat(line);
-                String statName = line.split(" ")[0].toLowerCase();
+
+                System.out.println("Extracting stat name: " + statName);
 
                 Stat stat = character.getStatByName(statName);
                 if (stat != null) {
                     stat.setCurrentBase(statValue);
+                } else {
+                    System.err.println("Stat not found: " + statName);
                 }
-            } else if (line.trim().startsWith("*")) {
-                characterName = extractName(line);
+            } else {
+                System.err.println("Invalid stat line: " + line);
+            }
+        } else if (line.startsWith("HITPOINTS")) {
+            hitpoints = extractCurrentHp(line);
+            System.out.println("Current HP: " + hitpoints);
+        } else if (line.startsWith("TEMP HP")) {
+            tempHp = extractTempHp(line);
+            System.out.println("Temp HP: " + tempHp);
+        } else if (line.startsWith("XP")) {
+            experience = extractCurrentXp(line);
+            System.out.println("Current XP: " + experience);
+        } else if (line.contains("SPECIALTIES")) {
+            currentMode = Mode.SPECIALTIES;
+        } else if (line.contains("FEATURES")) {
+            currentMode = Mode.FEATURES;
+        } else if (currentMode == Mode.SPECIALTIES) {
+            String specialtyName = extractNamedEntry(line);
+            if (specialtyName != null) {
+                System.out.println("Extracting specialty: " + specialtyName);
+                specialties.add(specialtyName);
+            }
+        } else if (currentMode == Mode.FEATURES) {
+            String featureName = extractNamedEntry(line);
+            if (featureName != null) {
+                System.out.println("Extracting feature: " + featureName);
+                features.add(featureName);
             }
         }
     }
-
-
 
     /**
      * Generates a new Character using the information stored in scholar
@@ -187,7 +268,7 @@ public class Scholar {
      * @return the extracted name as a string
      */
     public String extractName(String line) {
-        return line.substring(line.indexOf("*") + 1, line.lastIndexOf("*")).trim();
+        return line.substring(line.indexOf("*") + 1, line.lastIndexOf("*")).trim().toUpperCase();
     }
 
     /**
@@ -197,18 +278,52 @@ public class Scholar {
      * @return the stat value from the line as an int
      */
     public int extractStat(String line) {
-        return Integer.parseInt(line.replaceAll("[^0-9-]", ""));
+        line = line.trim();
+
+        if (line.startsWith("|")) {
+            line = line.substring(1).trim();
+        }
+        if (line.endsWith("|")) {
+            line = line.substring(0, line.length() - 1).trim();
+        }
+
+        String cleanedLine = line.replaceAll("[^0-9-]+", " ").trim();
+
+        String[] parts = cleanedLine.split("\\s+");
+
+        for (String part : parts) {
+            try {
+                return Integer.parseInt(part);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid stat value found: " + part);
+            }
+        }
+        throw new NumberFormatException("No valid stat value found in line: " + line);
     }
 
     /**
      * Extracts a named entry from a line of text, used for features and specialties.
      *
      * @param line the line of text expected to have a named entry in it
-     * @return the extracted named entry from the line
+     * @return the extracted named entry from the line, or null if the line is invalid
      */
     public String extractNamedEntry(String line) {
-        return line.trim().split("\\.")[1].trim();
+        line = line.trim();
+
+        if (line.matches("^[|=/\\-]+$") || line.isEmpty()) {
+            return null;
+        }
+
+        if (line.matches("^\\d+\\.\\s+.*")) {
+            String entry = line.split("\\.\\s+", 2)[1].trim();
+
+            entry = entry.replaceAll("\\[.*?\\]$", "").trim();
+
+            return entry.toLowerCase();
+        }
+        return null;
     }
+
 
     /**
      * Returns a string representing the internal state of Scholar.

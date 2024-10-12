@@ -27,9 +27,13 @@ public class Stat implements Named {
      *
      * @param name        the name of the new {@code Stat}
      * @param description the description of the new {@code Stat}
-     * @param min         initial minimum of both the base {@link Value} and the modifier {@link Value} in the new {@code Stat}
-     * @param max         initial maximum of both the base {@link Value} and the modifier {@link Value} in the new {@code Stat}
-     * @param current     initial current of the base {@link Value} in the new {@code Stat} (the current of the modifier {@link Value} is always initialised to zero, i.e. not modified)
+     * @param min         initial minimum of both the base
+     *                    {@link Value} and the modifier {@link Value} in the new {@code Stat}
+     * @param max         initial maximum of both the base {@link Value}
+     *                    and the modifier {@link Value} in the new {@code Stat}
+     * @param current     initial current of the base {@link Value} in the new {@code Stat}
+     *                    (the current of the modifier {@link Value} is always initialised
+     *                    to zero, i.e. not modified)
      */
     public Stat(String name, String description, int min, int max, int current) {
         this.name = name;

@@ -10,7 +10,14 @@ package demoworld.model;
  * will not be re-rolled as a part of that game roll action)
  */
 public class DiceRoller {
+    /**
+     * The first dice used for rolling.
+     */
     private final Dice dice1;
+
+    /**
+     * The second dice used for rolling.
+     */
     private final Dice dice2;
 
     /**
@@ -32,7 +39,7 @@ public class DiceRoller {
      */
     public DiceRoller(long seed) {
         this.dice1 = new Dice(6, seed);
-        this.dice2 = new Dice(6, seed + 1); // Slightly different seed for second dice
+        this.dice2 = new Dice(6, seed + 1);
     }
 
     /**
@@ -71,7 +78,6 @@ public class DiceRoller {
         int roll1 = dice1.roll();
         int roll2 = dice2.roll();
 
-        // Reroll if the dice match the target number
         if (roll1 == rerollTargetNumber) {
             roll1 = dice1.roll();
         }

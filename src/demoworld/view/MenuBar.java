@@ -5,58 +5,53 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 /**
- * MenuBar that handles file options and screens.
- * Implements a JMenuBar with options for file and screen-related actions.
+ * Represents the main menu bar for the application.
+ * The {@code MenuBar} class extends {@link JMenuBar}
+ * and allows dynamic creation of menus and menu items
+ * based on the provided structure and user interactions.
  */
 public class MenuBar extends JMenuBar {
 
+    /** A map to store menu names and their
+     * corresponding {@link JMenu} objects.
+     */
     private final HashMap<String, JMenu> menus;
 
     /**
-     * Constructor for MenuBar.
-     * Initializes the menus and their options.
+     * Constructs a new {@code MenuBar} instance and initializes the default menus.
+     * The default parent menus "File" and "Screens" are added upon creation.
      */
     public MenuBar() {
         menus = new HashMap<>();
 
-        // Create the "File" menu and add options
         addParentMenu("File");
-        addOption("File", "Open", e -> System.out.println("Open clicked"));
-        addOption("File", "Save", e -> System.out.println("Save clicked"));
-        addOption("File", "Exit", e -> System.exit(0));
-
-        // Create the "Screens" menu and add options
         addParentMenu("Screens");
-        addOption("Screens", "Character Sheet", e -> System.out.println("Character Sheet clicked"));
-        addOption("Screens", "Add Specialties", e -> System.out.println("Add Specialties clicked"));
-        addOption("Screens", "Add Features", e -> System.out.println("Add Features clicked"));
-        addOption("Screens", "Remove Specialty", e -> System.out.println("Remove Specialty clicked"));
-        addOption("Screens", "Remove Feature", e -> System.out.println("Remove Feature clicked"));
-    }
-
-
-    /**
-     * Adds an option to a parent menu.
-     *
-     * @param menu The parent menu name.
-     * @param label The label of the menu option.
-     * @param listener The action listener for the option.
-     */
-    public void addOption(String menu, String label, ActionListener listener) {
-        JMenuItem menuItem = new JMenuItem(label);
-        menuItem.addActionListener(listener);
-        menus.get(menu).add(menuItem);
     }
 
     /**
-     * Adds a new parent menu to the menu bar.
+     * Adds a new parent menu to the menu bar with the given name.
+     * This method creates a {@link JMenu} and associates it with the given name in the menu map.
      *
-     * @param name The name of the parent menu.
+     * @param name the name of the parent menu to be added
      */
     public void addParentMenu(String name) {
         JMenu menu = new JMenu(name);
         menus.put(name, menu);
         add(menu);
+    }
+
+    /**
+     * Adds a new menu item (option) under the specified parent menu.
+     * The menu item will trigger the provided {@link ActionListener} when selected.
+     *
+     * @param menu     the name of the parent menu under which the option should be added
+     * @param label    the label for the menu item (option)
+     * @param listener the action listener to be triggered when the menu item is selected
+     */
+    public void addOption(String menu, String label, ActionListener listener) {
+        JMenuItem menuItem = new JMenuItem(label);
+        menuItem.addActionListener(listener);
+        menus.get(menu).add(menuItem);
     }
 }
 
