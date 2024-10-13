@@ -57,7 +57,7 @@ public interface MainView {
      *
      * @return The {@code JMenuBar} used as the top menu bar in the view.
      */
-    JMenuBar getTopMenuBar();
+    MenuBar getTopMenuBar();
 
     /**
      * Makes the search panel visible.

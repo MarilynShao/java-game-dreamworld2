@@ -130,7 +130,7 @@ public class View extends JFrame implements MainView {
      * @return the menu bar at the top of the window
      */
     @Override
-    public JMenuBar getTopMenuBar() {
+    public MenuBar getTopMenuBar() {
         return menuBar;
     }
 

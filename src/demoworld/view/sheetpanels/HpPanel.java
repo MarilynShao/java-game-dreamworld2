@@ -56,12 +56,11 @@ public class HpPanel extends JPanel implements ReliesOnCharacterData {
         hpBar.setString("HITPOINTS (0) 0/0");
         hpBar.setStringPainted(true);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
-
         damageButton = new JButton("Damage");
         healButton = new JButton("Heal");
         tempHpButton = new JButton("+1 Temp Hp");
 
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
         buttonPanel.add(damageButton);
         buttonPanel.add(healButton);
         buttonPanel.add(tempHpButton);
